@@ -1,0 +1,9 @@
+{
+  "pid": 2848,
+  "startedAt": 1788232888797,
+  "command": "dev",
+  "cwd": "C:/Users/soumd/Downloads/LaoShop-ECommerce-Complete/ecommerce-complete/admin-nuxt",
+  "port": 3000,
+  "hostname": "::1",
+  "url": "http://[::1]:3000"
+}
