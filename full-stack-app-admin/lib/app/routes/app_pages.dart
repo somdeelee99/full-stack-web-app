@@ -1,4 +1,15 @@
 import 'package:get/get.dart';
+import 'package:shopadmin/app/modules/auth/bindings/auth_binding.dart';
+import 'package:shopadmin/app/modules/auth/views/login_view.dart';
+import 'package:shopadmin/app/modules/categories/bindings/categories_binding.dart';
+import 'package:shopadmin/app/modules/categories/views/categories_view.dart';
+import 'package:shopadmin/app/modules/customers/bindings/customers_binding.dart';
+import 'package:shopadmin/app/modules/dashboard/bindings/dashboard_binding.dart';
+import 'package:shopadmin/app/modules/dashboard/views/dashboard_view.dart';
+import 'package:shopadmin/app/modules/orders/bindings/orders_binding.dart';
+import 'package:shopadmin/app/modules/orders/views/orders_view.dart';
+import 'package:shopadmin/app/modules/products/bindings/products_binding.dart';
+import 'package:shopadmin/app/modules/products/views/products_view.dart';
 
 /// Route paths for the application
 abstract class Routes {

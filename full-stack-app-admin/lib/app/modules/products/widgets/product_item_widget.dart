@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import '../../data/models/product_model.dart';
+import 'package:shopadmin/app/data/models/product_model.dart';
+
 import '../controllers/products_controller.dart';
 
 class ProductItemWidget extends StatelessWidget {

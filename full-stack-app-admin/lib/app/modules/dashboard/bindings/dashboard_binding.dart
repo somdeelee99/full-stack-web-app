@@ -5,7 +5,7 @@ import 'package:shopadmin/app/modules/dashboard/controllers/dashboard_controller
 class DashboardBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<DashboardRepository>(() => DashboardRepository());
+    Get.lazyPut<DashboardRepository>(() => DashboardRepository(Get.find()));
     Get.lazyPut<DashboardController>(() => DashboardController());
   }
 }

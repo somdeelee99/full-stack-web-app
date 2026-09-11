@@ -5,7 +5,7 @@ import 'package:shopadmin/app/modules/auth/controllers/auth_controller.dart';
 class AuthBinding extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<AuthRepository>(() => AuthRepository());
+    Get.lazyPut<AuthRepository>(() => AuthRepository(Get.find()));
     Get.lazyPut<AuthController>(() => AuthController());
   }
 }

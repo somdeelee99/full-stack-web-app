@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../controllers/dashboard_controller.dart';
 import '../widgets/stats_card_widget.dart';
 import '../widgets/dashboard_chart_widget.dart';
@@ -23,7 +24,7 @@ class DashboardView extends GetView<DashboardController> {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
         }
-        
+
         if (controller.errorMessage.isNotEmpty) {
           return Center(
             child: Column(
@@ -41,7 +42,7 @@ class DashboardView extends GetView<DashboardController> {
             ),
           );
         }
-        
+
         return RefreshIndicator(
           onRefresh: () => controller.loadDashboardData(),
           child: SingleChildScrollView(
@@ -87,7 +88,8 @@ class DashboardView extends GetView<DashboardController> {
                     Expanded(
                       child: StatsCardWidget(
                         title: 'Revenue',
-                        value: '\$${controller.totalRevenue.value.toStringAsFixed(2)}',
+                        value:
+                            '\$${controller.totalRevenue.value.toStringAsFixed(2)}',
                         icon: Icons.attach_money,
                         color: Colors.purple,
                       ),
@@ -95,14 +97,11 @@ class DashboardView extends GetView<DashboardController> {
                   ],
                 ),
                 const SizedBox(height: 24),
-                
+
                 // Charts
                 const Text(
                   'Sales Overview',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 16),
                 SizedBox(
@@ -115,10 +114,7 @@ class DashboardView extends GetView<DashboardController> {
                 const SizedBox(height: 24),
                 const Text(
                   'Orders Overview',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 16),
                 SizedBox(

@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 class AuthController extends GetxController {
   final RxBool isLoading = false.obs;
   final RxString token = ''.obs;
-  final RxnMap user = RxnMap();
+  // final RxnMap user = RxnMap();
   final RxBool isLoggedIn = false.obs;
 
   @override
@@ -41,7 +41,7 @@ class AuthController extends GetxController {
   /// Logout and clear authentication
   void logout() {
     token.value = '';
-    user.value = null;
+    // user.value = null;
     isLoggedIn.value = false;
     // TODO: Clear local storage
     Get.offAllNamed('/login');

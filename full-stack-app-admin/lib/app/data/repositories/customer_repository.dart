@@ -1,3 +1,5 @@
+import 'package:shopadmin/app/data/models/order_model.dart';
+
 import '../api/api_service.dart';
 import '../models/customer_model.dart';
 
@@ -43,7 +45,9 @@ class CustomerRepository {
   }
 
   // ສ້າງລູກຄ້າໃໝ່
-  Future<CustomerModel> createCustomer(Map<String, dynamic> customerData) async {
+  Future<CustomerModel> createCustomer(
+    Map<String, dynamic> customerData,
+  ) async {
     final response = await _apiService.post('/customers', data: customerData);
 
     if (response.statusCode == 201 && response.data != null) {
@@ -54,8 +58,14 @@ class CustomerRepository {
   }
 
   // ແກ້ໄຂຂໍ້ມູນລູກຄ້າ
-  Future<CustomerModel> updateCustomer(int id, Map<String, dynamic> customerData) async {
-    final response = await _apiService.put('/customers/$id', data: customerData);
+  Future<CustomerModel> updateCustomer(
+    int id,
+    Map<String, dynamic> customerData,
+  ) async {
+    final response = await _apiService.put(
+      '/customers/$id',
+      data: customerData,
+    );
 
     if (response.statusCode == 200 && response.data != null) {
       return CustomerModel.fromJson(response.data);

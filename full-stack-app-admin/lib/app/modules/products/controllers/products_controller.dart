@@ -1,20 +1,20 @@
 import 'package:get/get.dart';
-import '../../data/repositories/product_repository.dart';
-import '../../data/models/product_model.dart';
+import 'package:shopadmin/app/data/models/product_model.dart';
+import 'package:shopadmin/app/data/repositories/product_repository.dart';
 
 class ProductsController extends GetxController {
   final ProductRepository _repository = ProductRepository();
-  
+
   final RxList<ProductModel> products = <ProductModel>[].obs;
   final RxBool isLoading = false.obs;
   final RxString errorMessage = ''.obs;
-  
+
   @override
   void onInit() {
     super.onInit();
     fetchProducts();
   }
-  
+
   Future<void> fetchProducts() async {
     try {
       isLoading.value = true;
@@ -28,7 +28,7 @@ class ProductsController extends GetxController {
       isLoading.value = false;
     }
   }
-  
+
   Future<void> deleteProduct(String id) async {
     try {
       await _repository.deleteProduct(id);

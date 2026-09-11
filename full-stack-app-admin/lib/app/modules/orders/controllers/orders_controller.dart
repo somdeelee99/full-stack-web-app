@@ -1,20 +1,20 @@
 import 'package:get/get.dart';
-import '../../data/repositories/order_repository.dart';
-import '../../data/models/order_model.dart';
+import 'package:shopadmin/app/data/models/order_model.dart';
+import 'package:shopadmin/app/data/repositories/order_repository.dart';
 
 class OrdersController extends GetxController {
-  final OrderRepository _repository = OrderRepository();
-  
+  final OrderRepository _repository = OrderRepository(Get.find());
+
   final RxList<OrderModel> orders = <OrderModel>[].obs;
   final RxBool isLoading = false.obs;
   final RxString errorMessage = ''.obs;
-  
+
   @override
   void onInit() {
     super.onInit();
     fetchOrders();
   }
-  
+
   Future<void> fetchOrders() async {
     try {
       isLoading.value = true;
@@ -28,7 +28,7 @@ class OrdersController extends GetxController {
       isLoading.value = false;
     }
   }
-  
+
   Future<void> updateOrderStatus(String orderId, String status) async {
     try {
       await _repository.updateOrderStatus(orderId, status);

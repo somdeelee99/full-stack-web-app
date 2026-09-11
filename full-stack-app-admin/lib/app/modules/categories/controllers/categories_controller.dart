@@ -1,20 +1,20 @@
 import 'package:get/get.dart';
-import '../../data/repositories/category_repository.dart';
-import '../../data/models/category_model.dart';
+import 'package:shopadmin/app/data/models/category_model.dart';
+import 'package:shopadmin/app/data/repositories/category_repository.dart';
 
 class CategoriesController extends GetxController {
-  final CategoryRepository _repository = CategoryRepository();
-  
+  final CategoryRepository _repository = CategoryRepository(Get.find());
+
   final RxList<CategoryModel> categories = <CategoryModel>[].obs;
   final RxBool isLoading = false.obs;
   final RxString errorMessage = ''.obs;
-  
+
   @override
   void onInit() {
     super.onInit();
     fetchCategories();
   }
-  
+
   Future<void> fetchCategories() async {
     try {
       isLoading.value = true;
@@ -28,7 +28,7 @@ class CategoriesController extends GetxController {
       isLoading.value = false;
     }
   }
-  
+
   Future<void> deleteCategory(String id) async {
     try {
       await _repository.deleteCategory(id);

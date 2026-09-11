@@ -16,25 +16,27 @@ class ApiService extends GetConnect {
     _dio.options.receiveTimeout = const Duration(seconds: 30);
 
     // Interceptor ເພື່ອເພີ່ມ Token ໃນທຸກ request
-    _dio.interceptors.add(InterceptorsWrapper(
-      onRequest: (options, handler) async {
-        final token = await _secureStorage.read(key: 'admin_token');
-        if (token != null) {
-          options.headers['Authorization'] = 'Bearer $token';
-        }
-        return handler.next(options);
-      },
-      onResponse: (response, handler) {
-        return handler.next(response);
-      },
-      onError: (error, handler) {
-        if (error.response?.statusCode == 401) {
-          // Token ຫມົດອາຍຸ, ໃຫ້ logout
-          Get.offAllNamed('/login');
-        }
-        return handler.next(error);
-      },
-    ));
+    _dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) async {
+          final token = await _secureStorage.read(key: 'admin_token');
+          if (token != null) {
+            options.headers['Authorization'] = 'Bearer $token';
+          }
+          return handler.next(options);
+        },
+        onResponse: (response, handler) {
+          return handler.next(response);
+        },
+        onError: (error, handler) {
+          if (error.response?.statusCode == 401) {
+            // Token ຫມົດອາຍຸ, ໃຫ້ logout
+            Get.offAllNamed('/login');
+          }
+          return handler.next(error);
+        },
+      ),
+    );
   }
 
   // Generic GET method
