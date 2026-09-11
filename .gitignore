@@ -1,20 +1,17 @@
 ```
-# Flutter/Dart specific
-.dart_tool/
-.build/
-packages/
-*.i*
-*.swo
-*.swp
-*~
-.DS_Store
-Thumbs.db
+# Build outputs
+/build/
+/bin/
 
-# Dependencies
-.pub/
-vendor/
+# Generated plugin files
+/ios/Flutter/.last_build_id
 
-# Logs
+# Unit test coverage reports
+/coverage/
+
+# Temporary files
+*.tmp
+*.temp
 *.log
 
 # Environment variables
@@ -25,16 +22,10 @@ vendor/
 # IDE files
 .vscode/
 .idea/
-*.iml
-*.ipr
-*.iws
+*.swp
+*.swo
 
-# Build outputs
-build/
-dist/
-coverage/
-
-# Temporary files
-*.tmp
-*.temp
+# Dependencies
+node_modules/
+vendor/
 ```
