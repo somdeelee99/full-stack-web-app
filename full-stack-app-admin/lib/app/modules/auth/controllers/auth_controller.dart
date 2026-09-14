@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:shopadmin/app/core/errors/error_handler.dart';
 
 /// Authentication Controller
 /// Handles login, logout, and authentication state management
@@ -31,8 +32,11 @@ class AuthController extends GetxController {
       // user.value = result['user'];
       // updateAuthState();
       Get.offAllNamed('/dashboard');
-    } catch (e) {
-      Get.snackbar('Error', 'Login failed: $e');
+    } catch (e, s) {
+      Get.snackbar(
+        'ຜິດພາດ',
+        ErrorHandler.handle(e, s, context: 'AuthController.login'),
+      );
     } finally {
       isLoading.value = false;
     }

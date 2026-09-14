@@ -1,3 +1,4 @@
+import '../../core/errors/app_exception.dart';
 import 'package:shopadmin/app/data/models/order_model.dart';
 
 import '../api/api_service.dart';
@@ -30,7 +31,12 @@ class CustomerRepository {
       }
     }
 
-    throw Exception('ບໍ່ສາມາດດຶງຂໍ້ມູນລູກຄ້າໄດ້');
+    throw ParseException.withDetails(
+      'ບໍ່ສາມາດດຶງຂໍ້ມູນລູກຄ້າໄດ້',
+      originalError: response.data,
+      endpoint: 'GET /customers',
+      context: {'statusCode': response.statusCode},
+    );
   }
 
   // ດຶງຂໍ້ມູນລູກຄ້າຕາມ ID
@@ -41,7 +47,11 @@ class CustomerRepository {
       return CustomerModel.fromJson(response.data);
     }
 
-    throw Exception('ບໍ່ພົບຂໍ້ມູນລູກຄ້າ');
+    throw NotFoundException.withDetails(
+      'ບໍ່ພົບຂໍ້ມູນລູກຄ້າ',
+      originalError: response.data,
+      endpoint: 'GET /customers/$id',
+    );
   }
 
   // ສ້າງລູກຄ້າໃໝ່
@@ -54,7 +64,12 @@ class CustomerRepository {
       return CustomerModel.fromJson(response.data);
     }
 
-    throw Exception('ບໍ່ສາມາດສ້າງລູກຄ້າໄດ້');
+    throw ServerException.withDetails(
+      'ບໍ່ສາມາດສ້າງລູກຄ້າໄດ້',
+      statusCode: response.statusCode,
+      originalError: response.data,
+      endpoint: 'POST /customers',
+    );
   }
 
   // ແກ້ໄຂຂໍ້ມູນລູກຄ້າ
@@ -71,7 +86,12 @@ class CustomerRepository {
       return CustomerModel.fromJson(response.data);
     }
 
-    throw Exception('ບໍ່ສາມາດແກ້ໄຂຂໍ້ມູນລູກຄ້າໄດ້');
+    throw ServerException.withDetails(
+      'ບໍ່ສາມາດແກ້ໄຂຂໍ້ມູນລູກຄ້າໄດ້',
+      statusCode: response.statusCode,
+      originalError: response.data,
+      endpoint: 'PUT /customers/$id',
+    );
   }
 
   // ລຶບລູກຄ້າ
@@ -79,7 +99,12 @@ class CustomerRepository {
     final response = await _apiService.delete('/customers/$id');
 
     if (response.statusCode != 200 && response.statusCode != 204) {
-      throw Exception('ບໍ່ສາມາດລຶບລູກຄ້າໄດ້');
+      throw ServerException.withDetails(
+        'ບໍ່ສາມາດລຶບລູກຄ້າໄດ້',
+        statusCode: response.statusCode,
+        originalError: response.data,
+        endpoint: 'DELETE /customers/$id',
+      );
     }
   }
 
@@ -94,6 +119,11 @@ class CustomerRepository {
       }
     }
 
-    throw Exception('ບໍ່ສາມາດດຶງປະຫວັດການຊື້ໄດ້');
+    throw ParseException.withDetails(
+      'ບໍ່ສາມາດດຶງປະຫວັດການຊື້ໄດ້',
+      originalError: response.data,
+      endpoint: 'GET /customers/$customerId/orders',
+      context: {'statusCode': response.statusCode},
+    );
   }
 }

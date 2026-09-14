@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:shopadmin/app/core/errors/error_handler.dart';
 import 'package:shopadmin/app/data/models/product_model.dart';
 import 'package:shopadmin/app/data/repositories/product_repository.dart';
 
@@ -21,9 +22,12 @@ class ProductsController extends GetxController {
       errorMessage.value = '';
       final fetchedProducts = await _repository.getProducts();
       products.value = fetchedProducts;
-    } catch (e) {
-      errorMessage.value = e.toString();
-      Get.snackbar('Error', 'Failed to load products');
+    } catch (e, s) {
+      errorMessage.value = ErrorHandler.handle(
+        e,
+        s,
+        context: 'ProductsController.fetchProducts',
+      );
     } finally {
       isLoading.value = false;
     }
@@ -34,8 +38,13 @@ class ProductsController extends GetxController {
       await _repository.deleteProduct(id);
       products.removeWhere((product) => product.id == id);
       Get.snackbar('Success', 'Product deleted successfully');
-    } catch (e) {
-      Get.snackbar('Error', 'Failed to delete product');
+    } catch (e, s) {
+      ErrorHandler.handleWithSnackbar(
+        e,
+        s,
+        context: 'ProductsController.deleteProduct',
+        details: {'productId': id},
+      );
     }
   }
 }

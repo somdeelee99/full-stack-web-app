@@ -1,3 +1,4 @@
+import '../../core/errors/app_exception.dart';
 import '../api/api_service.dart';
 import '../models/product_model.dart';
 
@@ -30,7 +31,12 @@ class ProductRepository {
       }
     }
 
-    throw Exception('ບໍ່ສາມາດດຶງຂໍ້ມູນສິນຄ້າໄດ້');
+    throw ParseException.withDetails(
+      'ບໍ່ສາມາດດຶງຂໍ້ມູນສິນຄ້າໄດ້',
+      originalError: response.data,
+      endpoint: 'GET /products',
+      context: {'statusCode': response.statusCode},
+    );
   }
 
   // ດຶງຂໍ້ມູນສິນຄ້າຕາມ ID
@@ -41,7 +47,11 @@ class ProductRepository {
       return ProductModel.fromJson(response.data);
     }
 
-    throw Exception('ບໍ່ພົບຂໍ້ມູນສິນຄ້າ');
+    throw NotFoundException.withDetails(
+      'ບໍ່ພົບຂໍ້ມູນສິນຄ້າ',
+      originalError: response.data,
+      endpoint: 'GET /products/$id',
+    );
   }
 
   // ສ້າງສິນຄ້າໃໝ່
@@ -52,7 +62,12 @@ class ProductRepository {
       return ProductModel.fromJson(response.data);
     }
 
-    throw Exception('ບໍ່ສາມາດສ້າງສິນຄ້າໄດ້');
+    throw ServerException.withDetails(
+      'ບໍ່ສາມາດສ້າງສິນຄ້າໄດ້',
+      statusCode: response.statusCode,
+      originalError: response.data,
+      endpoint: 'POST /products',
+    );
   }
 
   // ແກ້ໄຂຂໍ້ມູນສິນຄ້າ
@@ -66,7 +81,12 @@ class ProductRepository {
       return ProductModel.fromJson(response.data);
     }
 
-    throw Exception('ບໍ່ສາມາດແກ້ໄຂຂໍ້ມູນສິນຄ້າໄດ້');
+    throw ServerException.withDetails(
+      'ບໍ່ສາມາດແກ້ໄຂຂໍ້ມູນສິນຄ້າໄດ້',
+      statusCode: response.statusCode,
+      originalError: response.data,
+      endpoint: 'PUT /products/$id',
+    );
   }
 
   // ລຶບສິນຄ້າ
@@ -74,7 +94,12 @@ class ProductRepository {
     final response = await _apiService.delete('/products/$id');
 
     if (response.statusCode != 200 && response.statusCode != 204) {
-      throw Exception('ບໍ່ສາມາດລຶບສິນຄ້າໄດ້');
+      throw ServerException.withDetails(
+        'ບໍ່ສາມາດລຶບສິນຄ້າໄດ້',
+        statusCode: response.statusCode,
+        originalError: response.data,
+        endpoint: 'DELETE /products/$id',
+      );
     }
   }
 

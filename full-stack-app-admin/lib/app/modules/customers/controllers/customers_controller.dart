@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:shopadmin/app/core/errors/error_handler.dart';
 
 class CustomersController extends GetxController {
   final RxList<Map<String, dynamic>> customers = <Map<String, dynamic>>[].obs;
@@ -30,8 +31,8 @@ class CustomersController extends GetxController {
           'phone': '987654321',
         },
       ];
-    } catch (e) {
-      Get.snackbar('Error', e.toString());
+    } catch (e, s) {
+      ErrorHandler.handleWithSnackbar(e, s, context: 'CustomersController.fetchCustomers');
     } finally {
       isLoading.value = false;
     }

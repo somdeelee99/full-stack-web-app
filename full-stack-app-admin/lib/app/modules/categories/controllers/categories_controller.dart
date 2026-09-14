@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:shopadmin/app/core/errors/error_handler.dart';
 import 'package:shopadmin/app/data/models/category_model.dart';
 import 'package:shopadmin/app/data/repositories/category_repository.dart';
 
@@ -20,9 +21,12 @@ class CategoriesController extends GetxController {
       errorMessage.value = '';
       final fetchedCategories = await _repository.getCategories();
       categories.value = fetchedCategories;
-    } catch (e) {
-      errorMessage.value = e.toString();
-      Get.snackbar('Error', 'Failed to load categories');
+    } catch (e, s) {
+      errorMessage.value = ErrorHandler.handle(
+        e,
+        s,
+        context: 'CategoriesController.fetchCategories',
+      );
     } finally {
       isLoading.value = false;
     }
@@ -33,8 +37,13 @@ class CategoriesController extends GetxController {
       await _repository.deleteCategory(id);
       categories.removeWhere((category) => category.id == id);
       Get.snackbar('Success', 'Category deleted successfully');
-    } catch (e) {
-      Get.snackbar('Error', 'Failed to delete category');
+    } catch (e, s) {
+      ErrorHandler.handleWithSnackbar(
+        e,
+        s,
+        context: 'CategoriesController.deleteCategory',
+        details: {'categoryId': id},
+      );
     }
   }
 }

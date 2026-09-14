@@ -77,6 +77,7 @@
 // }
 
 import 'package:get/get.dart';
+import 'package:shopadmin/app/core/errors/error_handler.dart';
 import 'package:shopadmin/app/data/models/chart_point_model.dart';
 
 /// Dashboard Controller
@@ -111,9 +112,13 @@ class DashboardController extends GetxController {
       // totalCustomers.value = data['customers'];
       // totalOrders.value = data['orders'];
       // totalRevenue.value = data['revenue'];
-    } catch (e) {
-      errorMessage.value = 'Failed to load dashboard: $e';
-      Get.snackbar('Error', errorMessage.value);
+    } catch (e, s) {
+      errorMessage.value = ErrorHandler.handle(
+        e,
+        s,
+        context: 'DashboardController.loadDashboardData',
+      );
+      Get.snackbar('ຜິດພາດ', errorMessage.value);
     } finally {
       isLoading.value = false;
     }

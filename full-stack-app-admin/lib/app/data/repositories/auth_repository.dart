@@ -1,3 +1,4 @@
+import '../../core/errors/app_exception.dart';
 import '../api/api_service.dart';
 import '../models/user_model.dart';
 
@@ -23,7 +24,12 @@ class AuthRepository {
       return {'token': token, 'user': user};
     }
 
-    throw Exception('ການລົງທະບຽນເຂົ້າໃຊ້ລົ້ມເຫລວ');
+    throw AuthException.withDetails(
+      'ການລົງທະບຽນເຂົ້າໃຊ້ລົ້ມເຫລວ',
+      statusCode: response.statusCode,
+      originalError: response.data,
+      endpoint: 'POST /auth/login',
+    );
   }
 
   // ອອກຈາກລະບົບ (Logout)
@@ -44,7 +50,12 @@ class AuthRepository {
       return UserModel.fromJson(response.data);
     }
 
-    throw Exception('ບໍ່ສາມາດດຶງຂໍ້ມູນຜູ້ໃຊ້ໄດ້');
+    throw ParseException.withDetails(
+      'ບໍ່ສາມາດດຶງຂໍ້ມູນຜູ້ໃຊ້ໄດ້',
+      originalError: response.data,
+      endpoint: 'GET /auth/me',
+      context: {'statusCode': response.statusCode},
+    );
   }
 
   // ກວດສອບການເຂົ້າໃຊ້

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:shopadmin/app/core/errors/error_handler.dart';
 import 'package:shopadmin/app/data/models/order_model.dart';
 import 'package:shopadmin/app/data/repositories/order_repository.dart';
 
@@ -21,9 +22,12 @@ class OrdersController extends GetxController {
       errorMessage.value = '';
       final fetchedOrders = await _repository.getOrders();
       orders.value = fetchedOrders;
-    } catch (e) {
-      errorMessage.value = e.toString();
-      Get.snackbar('Error', 'Failed to load orders');
+    } catch (e, s) {
+      errorMessage.value = ErrorHandler.handle(
+        e,
+        s,
+        context: 'OrdersController.fetchOrders',
+      );
     } finally {
       isLoading.value = false;
     }
@@ -38,8 +42,13 @@ class OrdersController extends GetxController {
         orders.refresh();
       }
       Get.snackbar('Success', 'Order status updated successfully');
-    } catch (e) {
-      Get.snackbar('Error', 'Failed to update order status');
+    } catch (e, s) {
+      ErrorHandler.handleWithSnackbar(
+        e,
+        s,
+        context: 'OrdersController.updateOrderStatus',
+        details: {'orderId': orderId, 'status': status},
+      );
     }
   }
 }

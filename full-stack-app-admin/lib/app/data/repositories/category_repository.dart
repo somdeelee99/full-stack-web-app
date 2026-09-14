@@ -1,3 +1,4 @@
+import '../../core/errors/app_exception.dart';
 import '../api/api_service.dart';
 import '../models/category_model.dart';
 
@@ -17,7 +18,12 @@ class CategoryRepository {
       }
     }
 
-    throw Exception('ບໍ່ສາມາດດຶງຂໍ້ມູນໝວດໝູ່ໄດ້');
+    throw ParseException.withDetails(
+      'ບໍ່ສາມາດດຶງຂໍ້ມູນໝວດໝູ່ໄດ້',
+      originalError: response.data,
+      endpoint: 'GET /categories',
+      context: {'statusCode': response.statusCode},
+    );
   }
 
   // ດຶງຂໍ້ມູນໝວດໝູ່ຕາມ ID
@@ -28,7 +34,11 @@ class CategoryRepository {
       return CategoryModel.fromJson(response.data);
     }
 
-    throw Exception('ບໍ່ພົບຂໍ້ມູນໝວດໝູ່');
+    throw NotFoundException.withDetails(
+      'ບໍ່ພົບຂໍ້ມູນໝວດໝູ່',
+      originalError: response.data,
+      endpoint: 'GET /categories/$id',
+    );
   }
 
   // ສ້າງໝວດໝູ່ໃໝ່
@@ -41,7 +51,12 @@ class CategoryRepository {
       return CategoryModel.fromJson(response.data);
     }
 
-    throw Exception('ບໍ່ສາມາດສ້າງໝວດໝູ່ໄດ້');
+    throw ServerException.withDetails(
+      'ບໍ່ສາມາດສ້າງໝວດໝູ່ໄດ້',
+      statusCode: response.statusCode,
+      originalError: response.data,
+      endpoint: 'POST /categories',
+    );
   }
 
   // ແກ້ໄຂຂໍ້ມູນໝວດໝູ່
@@ -58,7 +73,12 @@ class CategoryRepository {
       return CategoryModel.fromJson(response.data);
     }
 
-    throw Exception('ບໍ່ສາມາດແກ້ໄຂຂໍ້ມູນໝວດໝູ່ໄດ້');
+    throw ServerException.withDetails(
+      'ບໍ່ສາມາດແກ້ໄຂຂໍ້ມູນໝວດໝູ່ໄດ້',
+      statusCode: response.statusCode,
+      originalError: response.data,
+      endpoint: 'PUT /categories/$id',
+    );
   }
 
   // ລຶບໝວດໝູ່
@@ -66,7 +86,12 @@ class CategoryRepository {
     final response = await _apiService.delete('/categories/$id');
 
     if (response.statusCode != 200 && response.statusCode != 204) {
-      throw Exception('ບໍ່ສາມາດລຶບໝວດໝູ່ໄດ້');
+      throw ServerException.withDetails(
+        'ບໍ່ສາມາດລຶບໝວດໝູ່ໄດ້',
+        statusCode: response.statusCode,
+        originalError: response.data,
+        endpoint: 'DELETE /categories/$id',
+      );
     }
   }
 }

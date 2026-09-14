@@ -1,3 +1,4 @@
+import '../../core/errors/app_exception.dart';
 import '../api/api_service.dart';
 import '../models/order_model.dart';
 
@@ -30,7 +31,12 @@ class OrderRepository {
       }
     }
 
-    throw Exception('ບໍ່ສາມາດດຶງຂໍ້ມູນຄຳສັ່ງຊື້ໄດ້');
+    throw ParseException.withDetails(
+      'ບໍ່ສາມາດດຶງຂໍ້ມູນຄຳສັ່ງຊື້ໄດ້',
+      originalError: response.data,
+      endpoint: 'GET /orders',
+      context: {'statusCode': response.statusCode},
+    );
   }
 
   // ດຶງຂໍ້ມູນຄຳສັ່ງຊື້ຕາມ ID
@@ -41,7 +47,11 @@ class OrderRepository {
       return OrderModel.fromJson(response.data);
     }
 
-    throw Exception('ບໍ່ພົບຂໍ້ມູນຄຳສັ່ງຊື້');
+    throw NotFoundException.withDetails(
+      'ບໍ່ພົບຂໍ້ມູນຄຳສັ່ງຊື້',
+      originalError: response.data,
+      endpoint: 'GET /orders/$id',
+    );
   }
 
   // ອັບເດດສະຖານະຄຳສັ່ງຊື້
@@ -55,7 +65,12 @@ class OrderRepository {
       return OrderModel.fromJson(response.data);
     }
 
-    throw Exception('ບໍ່ສາມາດອັບເດດສະຖານະຄຳສັ່ງຊື້ໄດ້');
+    throw ServerException.withDetails(
+      'ບໍ່ສາມາດອັບເດດສະຖານະຄຳສັ່ງຊື້ໄດ້',
+      statusCode: response.statusCode,
+      originalError: response.data,
+      endpoint: 'PUT /orders/$id/status',
+    );
   }
 
   // ຍົກເລີກຄຳສັ່ງຊື້
@@ -69,6 +84,11 @@ class OrderRepository {
       return OrderModel.fromJson(response.data);
     }
 
-    throw Exception('ບໍ່ສາມາດຍົກເລີກຄຳສັ່ງຊື້ໄດ້');
+    throw ServerException.withDetails(
+      'ບໍ່ສາມາດຍົກເລີກຄຳສັ່ງຊື້ໄດ້',
+      statusCode: response.statusCode,
+      originalError: response.data,
+      endpoint: 'POST /orders/$id/cancel',
+    );
   }
 }
