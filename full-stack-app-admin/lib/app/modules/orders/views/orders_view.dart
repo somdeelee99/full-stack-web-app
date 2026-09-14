@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 import '../controllers/orders_controller.dart';
 import '../widgets/order_list_widget.dart';
 
@@ -26,7 +27,7 @@ class OrdersView extends GetView<OrdersController> {
         if (controller.isLoading.value) {
           return const Center(child: CircularProgressIndicator());
         }
-        
+
         if (controller.errorMessage.isNotEmpty) {
           return Center(
             child: Column(
@@ -44,13 +45,17 @@ class OrdersView extends GetView<OrdersController> {
             ),
           );
         }
-        
+
         if (controller.orders.isEmpty) {
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.receipt_long_outlined, size: 48, color: Colors.grey[400]),
+                Icon(
+                  Icons.receipt_long_outlined,
+                  size: 48,
+                  color: Colors.grey[400],
+                ),
                 const SizedBox(height: 16),
                 Text(
                   'No orders found',
@@ -60,12 +65,13 @@ class OrdersView extends GetView<OrdersController> {
             ),
           );
         }
-        
+
+        // return OrderListWidget(orders: controller.orders);
         return OrderListWidget(orders: controller.orders);
       }),
     );
   }
-  
+
   void _showFilterDialog(BuildContext context) {
     // TODO: Implement filter dialog
     Get.snackbar('Info', 'Filter feature coming soon');

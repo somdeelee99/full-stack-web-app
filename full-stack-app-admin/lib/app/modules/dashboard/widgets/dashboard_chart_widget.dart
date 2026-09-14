@@ -41,7 +41,7 @@ class DashboardChartWidget extends StatelessWidget {
 
           // Simple bar chart representation
           final maxValue = chartData
-              .map((e) => e.value)
+              .map((e) => e.y)
               .reduce((a, b) => a > b ? a : b);
 
           return Column(
@@ -61,14 +61,14 @@ class DashboardChartWidget extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: chartData.map((point) {
                     final height = maxValue > 0
-                        ? (point.value / maxValue * 150).clamp(20.0, 150.0)
+                        ? (point.y / maxValue * 150).clamp(20.0, 150.0)
                         : 20.0;
 
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          point.value.toString(),
+                          point.y.toString(),
                           style: TextStyle(
                             fontSize: 10,
                             color: Colors.grey[600],
@@ -89,7 +89,7 @@ class DashboardChartWidget extends StatelessWidget {
                         ),
                         const SizedBox(height: 4),
                         Text(
-                          point.label,
+                          point.label ?? '',
                           style: TextStyle(
                             fontSize: 10,
                             color: Colors.grey[600],

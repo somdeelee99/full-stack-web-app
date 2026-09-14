@@ -9,7 +9,7 @@ class DashboardRepository {
   // ດຶງຂໍ້ມູນສະຖິຕິ Dashboard
   Future<DashboardStatsModel> getDashboardStats() async {
     final response = await _apiService.get('/dashboard/stats');
-    
+
     if (response.statusCode == 200 && response.data != null) {
       return DashboardStatsModel.fromJson(response.data);
     }
@@ -25,7 +25,7 @@ class DashboardRepository {
       '/dashboard/revenue-chart',
       queryParameters: {'period': period},
     );
-    
+
     if (response.statusCode == 200 && response.data != null) {
       return List<Map<String, dynamic>>.from(response.data);
     }
@@ -41,7 +41,7 @@ class DashboardRepository {
       '/dashboard/orders-chart',
       queryParameters: {'period': period},
     );
-    
+
     if (response.statusCode == 200 && response.data != null) {
       return List<Map<String, dynamic>>.from(response.data);
     }

@@ -32,7 +32,9 @@ class CategoryRepository {
   }
 
   // ສ້າງໝວດໝູ່ໃໝ່
-  Future<CategoryModel> createCategory(Map<String, dynamic> categoryData) async {
+  Future<CategoryModel> createCategory(
+    Map<String, dynamic> categoryData,
+  ) async {
     final response = await _apiService.post('/categories', data: categoryData);
 
     if (response.statusCode == 201 && response.data != null) {
@@ -43,8 +45,14 @@ class CategoryRepository {
   }
 
   // ແກ້ໄຂຂໍ້ມູນໝວດໝູ່
-  Future<CategoryModel> updateCategory(int id, Map<String, dynamic> categoryData) async {
-    final response = await _apiService.put('/categories/$id', data: categoryData);
+  Future<CategoryModel> updateCategory(
+    int id,
+    Map<String, dynamic> categoryData,
+  ) async {
+    final response = await _apiService.put(
+      '/categories/$id',
+      data: categoryData,
+    );
 
     if (response.statusCode == 200 && response.data != null) {
       return CategoryModel.fromJson(response.data);

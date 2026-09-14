@@ -12,7 +12,6 @@ class CategoriesController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchCategories();
   }
 
   Future<void> fetchCategories() async {

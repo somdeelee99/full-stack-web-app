@@ -8,22 +8,19 @@ class AuthRepository {
 
   // ລົງທະບຽນເຂົ້າໃຊ້ (Login)
   Future<Map<String, dynamic>> login(String email, String password) async {
-    final response = await _apiService.post('/auth/login', data: {
-      'email': email,
-      'password': password,
-    });
+    final response = await _apiService.post(
+      '/auth/login',
+      data: {'email': email, 'password': password},
+    );
 
     if (response.statusCode == 200 && response.data != null) {
       final token = response.data['token'];
       final user = UserModel.fromJson(response.data['user']);
-      
+
       // ບັນທຶກ Token
       await _apiService.setToken(token);
-      
-      return {
-        'token': token,
-        'user': user,
-      };
+
+      return {'token': token, 'user': user};
     }
 
     throw Exception('ການລົງທະບຽນເຂົ້າໃຊ້ລົ້ມເຫລວ');
@@ -42,7 +39,7 @@ class AuthRepository {
   // ດຶງຂໍ້ມູນຜູ້ໃຊ້ປັດຈຸບັນ
   Future<UserModel> getCurrentUser() async {
     final response = await _apiService.get('/auth/me');
-    
+
     if (response.statusCode == 200 && response.data != null) {
       return UserModel.fromJson(response.data);
     }

@@ -2,14 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:get/get.dart' hide Response, FormData, MultipartFile;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../../core/constants/api_constants.dart';
+
 class ApiService extends GetxService {
   final Dio _dio = Dio();
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
 
-  final String baseUrl = 'http://localhost:3001/api';
-
   ApiService() {
-    _dio.options.baseUrl = baseUrl;
+    _dio.options.baseUrl = ApiConstants.baseUrl;
     _dio.options.connectTimeout = const Duration(seconds: 30);
     _dio.options.receiveTimeout = const Duration(seconds: 30);
 

@@ -56,7 +56,10 @@ class ProductRepository {
   }
 
   // ແກ້ໄຂຂໍ້ມູນສິນຄ້າ
-  Future<ProductModel> updateProduct(int id, Map<String, dynamic> productData) async {
+  Future<ProductModel> updateProduct(
+    int id,
+    Map<String, dynamic> productData,
+  ) async {
     final response = await _apiService.put('/products/$id', data: productData);
 
     if (response.statusCode == 200 && response.data != null) {
