@@ -113,8 +113,11 @@ class CategoryItemWidget extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              Navigator.pop(context);
-              controller.deleteCategory(category.id);
+              if (category.id != null) {
+                controller.deleteCategory(category.id!);
+              }
+              // Navigator.pop(context);
+              // controller.deleteCategory(category.id);
             },
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
             child: const Text('Delete', style: TextStyle(color: Colors.white)),

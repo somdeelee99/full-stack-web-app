@@ -29,7 +29,7 @@ class CategoriesController extends GetxController {
     }
   }
 
-  Future<void> deleteCategory(String id) async {
+  Future<void> deleteCategory(int id) async {
     try {
       await _repository.deleteCategory(id);
       categories.removeWhere((category) => category.id == id);

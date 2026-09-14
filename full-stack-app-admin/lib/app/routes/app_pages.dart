@@ -4,6 +4,7 @@ import 'package:shopadmin/app/modules/auth/views/login_view.dart';
 import 'package:shopadmin/app/modules/categories/bindings/categories_binding.dart';
 import 'package:shopadmin/app/modules/categories/views/categories_view.dart';
 import 'package:shopadmin/app/modules/customers/bindings/customers_binding.dart';
+import 'package:shopadmin/app/modules/customers/views/customers_view.dart';
 import 'package:shopadmin/app/modules/dashboard/bindings/dashboard_binding.dart';
 import 'package:shopadmin/app/modules/dashboard/views/dashboard_view.dart';
 import 'package:shopadmin/app/modules/orders/bindings/orders_binding.dart';
@@ -23,7 +24,7 @@ abstract class Routes {
 
 /// Page route configuration with bindings
 class AppPages {
-  static const initial = Routes.login;
+  static const INITIAL = Routes.login;
 
   static final routes = [
     GetPage(

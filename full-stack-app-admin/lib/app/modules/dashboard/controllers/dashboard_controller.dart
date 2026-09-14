@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 /// Handles dashboard data and statistics
 class DashboardController extends GetxController {
   final RxBool isLoading = false.obs;
-  
+  final RxString errorMessage = ''.obs;
+
   // Statistics
   final RxInt totalProducts = 0.obs;
   final RxInt totalCustomers = 0.obs;
@@ -20,6 +21,7 @@ class DashboardController extends GetxController {
   Future<void> loadDashboardData() async {
     try {
       isLoading.value = true;
+      errorMessage.value = '';
       // TODO: Call repository to fetch dashboard data
       // final data = await Get.find<DashboardRepository>().getDashboardStats();
       // totalProducts.value = data['products'];
@@ -27,7 +29,8 @@ class DashboardController extends GetxController {
       // totalOrders.value = data['orders'];
       // totalRevenue.value = data['revenue'];
     } catch (e) {
-      Get.snackbar('Error', 'Failed to load dashboard: $e');
+      errorMessage.value = 'Failed to load dashboard: $e';
+      Get.snackbar('Error', errorMessage.value);
     } finally {
       isLoading.value = false;
     }

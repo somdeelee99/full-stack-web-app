@@ -6,7 +6,7 @@ class OrderModel {
   final String? customerEmail;
   final List<OrderItemModel> items;
   final double totalAmount;
-  final String status; // pending, processing, shipped, delivered, cancelled
+  final String status;
   final String? paymentMethod;
   final String? shippingAddress;
   final DateTime? createdAt;
@@ -27,10 +27,40 @@ class OrderModel {
     this.updatedAt,
   });
 
+  OrderModel copyWith({
+    int? id,
+    String? orderNumber,
+    int? customerId,
+    String? customerName,
+    String? customerEmail,
+    List<OrderItemModel>? items,
+    double? totalAmount,
+    String? status,
+    String? paymentMethod,
+    String? shippingAddress,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+  }) {
+    return OrderModel(
+      id: id ?? this.id,
+      orderNumber: orderNumber ?? this.orderNumber,
+      customerId: customerId ?? this.customerId,
+      customerName: customerName ?? this.customerName,
+      customerEmail: customerEmail ?? this.customerEmail,
+      items: items ?? this.items,
+      totalAmount: totalAmount ?? this.totalAmount,
+      status: status ?? this.status,
+      paymentMethod: paymentMethod ?? this.paymentMethod,
+      shippingAddress: shippingAddress ?? this.shippingAddress,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
+
   factory OrderModel.fromJson(Map<String, dynamic> json) {
     var itemsList = json['items'] as List?;
-    List<OrderItemModel> items = itemsList?.map((i) => OrderItemModel.fromJson(i)).toList() ?? [];
-
+    List<OrderItemModel> items =
+        itemsList?.map((i) => OrderItemModel.fromJson(i)).toList() ?? [];
     return OrderModel(
       id: json['id'],
       orderNumber: json['order_number'] ?? '',
@@ -42,11 +72,11 @@ class OrderModel {
       status: json['status'] ?? 'pending',
       paymentMethod: json['payment_method'],
       shippingAddress: json['shipping_address'],
-      createdAt: json['created_at'] != null 
-          ? DateTime.parse(json['created_at']) 
+      createdAt: json['created_at'] != null
+          ? DateTime.parse(json['created_at'])
           : null,
-      updatedAt: json['updated_at'] != null 
-          ? DateTime.parse(json['updated_at']) 
+      updatedAt: json['updated_at'] != null
+          ? DateTime.parse(json['updated_at'])
           : null,
     );
   }
@@ -85,6 +115,24 @@ class OrderItemModel {
     required this.price,
     required this.subtotal,
   });
+
+  OrderItemModel copyWith({
+    int? id,
+    int? productId,
+    String? productName,
+    int? quantity,
+    double? price,
+    double? subtotal,
+  }) {
+    return OrderItemModel(
+      id: id ?? this.id,
+      productId: productId ?? this.productId,
+      productName: productName ?? this.productName,
+      quantity: quantity ?? this.quantity,
+      price: price ?? this.price,
+      subtotal: subtotal ?? this.subtotal,
+    );
+  }
 
   factory OrderItemModel.fromJson(Map<String, dynamic> json) {
     return OrderItemModel(

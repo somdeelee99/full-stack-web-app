@@ -29,12 +29,12 @@ class OrdersController extends GetxController {
     }
   }
 
-  Future<void> updateOrderStatus(String orderId, String status) async {
+  Future<void> updateOrderStatus(int orderId, String status) async {
     try {
       await _repository.updateOrderStatus(orderId, status);
       final index = orders.indexWhere((order) => order.id == orderId);
       if (index != -1) {
-        orders[index].status = status;
+        orders[index] = orders[index].copyWith(status: status);
         orders.refresh();
       }
       Get.snackbar('Success', 'Order status updated successfully');

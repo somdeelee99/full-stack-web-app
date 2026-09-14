@@ -7,14 +7,18 @@ import '../controllers/products_controller.dart';
 
 class ProductItemWidget extends StatelessWidget {
   final ProductModel product;
-  
+
   const ProductItemWidget({Key? key, required this.product}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<ProductsController>();
-    final currencyFormat = NumberFormat.currency(symbol: '$', decimalDigits: 2);
-    
+    final currencyFormat = NumberFormat.currency(
+      symbol: '\$',
+      locale: 'en_US',
+      decimalDigits: 2,
+    );
+
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       child: InkWell(
@@ -38,7 +42,10 @@ class ProductItemWidget extends StatelessWidget {
                             width: 60,
                             height: 60,
                             color: Colors.grey[200],
-                            child: Icon(Icons.image_not_supported, color: Colors.grey[400]),
+                            child: Icon(
+                              Icons.image_not_supported,
+                              color: Colors.grey[400],
+                            ),
                           );
                         },
                       )
@@ -50,7 +57,7 @@ class ProductItemWidget extends StatelessWidget {
                       ),
               ),
               const SizedBox(width: 12),
-              
+
               // Product Info
               Expanded(
                 child: Column(
@@ -67,11 +74,8 @@ class ProductItemWidget extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      product.category ?? 'Uncategorized',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey[600],
-                      ),
+                      product.description ?? 'Uncategorized',
+                      style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                     ),
                     const SizedBox(height: 4),
                     Text(
@@ -85,19 +89,22 @@ class ProductItemWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              
+
               // Stock & Actions
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 4,
+                    ),
                     decoration: BoxDecoration(
-                      color: product.stock > 10 
-                          ? Colors.green[100] 
-                          : product.stock > 0 
-                              ? Colors.orange[100] 
-                              : Colors.red[100],
+                      color: product.stock > 10
+                          ? Colors.green[100]
+                          : product.stock > 0
+                          ? Colors.orange[100]
+                          : Colors.red[100],
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Text(
@@ -105,11 +112,11 @@ class ProductItemWidget extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 10,
                         fontWeight: FontWeight.bold,
-                        color: product.stock > 10 
-                            ? Colors.green[800] 
-                            : product.stock > 0 
-                                ? Colors.orange[800] 
-                                : Colors.red[800],
+                        color: product.stock > 10
+                            ? Colors.green[800]
+                            : product.stock > 0
+                            ? Colors.orange[800]
+                            : Colors.red[800],
                       ),
                     ),
                   ),
@@ -139,17 +146,17 @@ class ProductItemWidget extends StatelessWidget {
       ),
     );
   }
-  
+
   void _showProductDetails(BuildContext context) {
     // TODO: Navigate to product details page
     Get.snackbar('Info', 'Product details coming soon');
   }
-  
+
   void _showEditDialog(BuildContext context) {
     // TODO: Implement edit product dialog
     Get.snackbar('Info', 'Edit product feature coming soon');
   }
-  
+
   void _confirmDelete(BuildContext context, ProductsController controller) {
     showDialog(
       context: context,
@@ -164,7 +171,11 @@ class ProductItemWidget extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
-              controller.deleteProduct(product.id);
+              if (product.id != null) {
+                controller.deleteProduct(product.id!);
+              } else {
+                Get.snackbar('Error', 'Product ID is null. Cannot delete.');
+              }
             },
             style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
             child: const Text('Delete', style: TextStyle(color: Colors.white)),

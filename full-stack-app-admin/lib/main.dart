@@ -9,7 +9,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // ກຳນົດຄ່າເລີ່ມຕົ້ນຂອງ API
-  await ApiConstants.init();
+  await ApiConstants.loadConstants;
 
   runApp(const MyApp());
 }
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       title: 'Admin Dashboard',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
+      // darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.light,
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,

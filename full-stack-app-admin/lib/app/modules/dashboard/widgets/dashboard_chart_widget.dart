@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../data/models/dashboard_model.dart';
+import 'package:shopadmin/app/data/models/chart_point_model.dart';
 
 class DashboardChartWidget extends StatelessWidget {
   final RxList<ChartPoint> chartData;
